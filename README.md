@@ -2,6 +2,19 @@
 
 
 # OpenKE
+
+To use as a python module:
+
+```sh
+pip install openke
+```
+
+Example of cmd interface usage:
+
+```sh
+python -m openke train transe --dataset /home/zeio/recommenders/data/truncated-dataset-normalized.txt
+```
+
 An Open-source Framework for Knowledge Embedding.
 
 More information is available on our website 
