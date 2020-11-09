@@ -34,7 +34,18 @@ def train(model: str, triples: Tuple[Triple], relation_to_id: dict, entity_to_id
         con.set_out_files("./res/embedding.vec.json")
         # Initialize experimental settings.
         con.init()
-        con.set_model(models.TransE)
+        con.set_model(
+            models.TransE if model == models.TransE.key else
+            models.TransH if model == models.TransH.key else
+            models.TransD if model == models.TransD.key else
+            models.TransR if model == models.TransR.key else
+            models.RESCAL if model == models.RESCAL.key else
+            models.DistMult if model == models.DistMult.key else
+            models.HolE if model == models.HolE.key else
+            models.ComplEx if model == models.ComplEx.key else
+            models.Analogy if model == models.Analogy.key else
+            None
+        )
         # Train the model.
         con.run()
         return con

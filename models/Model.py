@@ -3,6 +3,7 @@ import tensorflow as tf
 
 
 class Model(tf.keras.Model):
+    key = None
 
     def get_config(self):
         return self.config

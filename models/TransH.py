@@ -9,6 +9,7 @@ class TransH(Model):
     To preserve the mapping propertities of 1-N/N-1/N-N relations,
     TransH inperprets a relation as a translating operation on a hyperplane.
     '''
+    key = 'transh'
 
     def _transfer(self, e, n):
         n = tf.nn.l2_normalize(n, -1)

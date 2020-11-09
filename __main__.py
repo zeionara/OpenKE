@@ -2,6 +2,7 @@ import click
 
 from api import train as train_
 from data.PersistedDatasetAdapter import PersistedDatasetAdapter
+from models import TransE, TransH, TransD, TransR, RESCAL, DistMult, HolE, ComplEx, Analogy
 
 
 @click.group()
@@ -10,7 +11,7 @@ def main():
 
 
 @main.command()
-@click.argument('model', type=click.Choice(['transe']))
+@click.argument('model', type=click.Choice([model.key for model in {TransE, TransH, TransD, TransR, RESCAL, DistMult, HolE, ComplEx, Analogy}]))
 @click.option('--dataset', type=str)
 @click.option('--n-threads', '-t', type=int, default=8)
 @click.option('--n-epochs', '-e', type=int, default=1000)
