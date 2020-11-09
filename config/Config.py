@@ -456,10 +456,11 @@ class Config(object):
             r (int): relation id
             thresh (fload): threshold for the triple
         '''
-        self.init_triple_classification()
+        # self.init_triple_classification()
         if self.importName != None:
             self.restore_tensorflow()
         res = self.test_step(np.array([h]), np.array([t]), np.array([r]))
+        return res
         if thresh != None:
             if res < thresh:
                 print("triple (%d,%d,%d) is correct" % (h, t, r))

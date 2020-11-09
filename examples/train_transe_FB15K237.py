@@ -67,7 +67,8 @@ def train(triples: Tuple[Triple], relation_to_id: dict, entity_to_id: dict, n_th
         con.set_model(models.TransE)
         # Train the model.
         con.run()
-        return con.trainModel
+        return con
 
 
-model = train(triples=(Triple(0, 1, 0), Triple(1, 0, 0)), relation_to_id={'a': 0}, entity_to_id={'0': 0, '1': 1}, n_epochs=10)
+con = train(triples=(Triple(0, 1, 0), Triple(1, 0, 0)), relation_to_id={'a': 0}, entity_to_id={'0': 0, '1': 1}, n_epochs=10)
+print(con.predict_triple(1, 0, 0))
