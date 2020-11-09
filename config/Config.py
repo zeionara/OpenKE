@@ -275,10 +275,10 @@ class Config(object):
 		self.model = model
 		self.graph = tf.Graph()
 		with self.graph.as_default():
-			self.sess = tf.Session()
+			self.sess = tf.compat.v1.Session()
 			with self.sess.as_default():
-				initializer = tf.contrib.layers.xavier_initializer(uniform = True)
-				with tf.variable_scope("model", reuse=None, initializer = initializer):
+				initializer = tf.initializers.GlorotUniform()
+				with tf.compat.v1.variable_scope("model", reuse=None, initializer = initializer):
 					self.trainModel = self.model(config = self)
 					if self.optimizer != None:
 						pass
@@ -292,9 +292,9 @@ class Config(object):
 						self.optimizer = tf.keras.optimizers.SGD(self.alpha)
 					grads_and_vars = self.optimizer.get_gradients(self.trainModel.loss, self.trainModel.trainable_variables)
 					self.train_op = self.optimizer.apply_gradients(zip(grads_and_vars, self.trainModel.trainable_variables))
-				self.saver = tf.train.Saver()
-				self.ckpt = tf.train.Checkpoint(optimizer=self.optimizer, model=self.trainModel)
-				self.sess.run(tf.global_variables_initializer())
+				self.saver = tf.compat.v1.train.Saver()
+				self.ckpt = tf.compat.v1.train.Checkpoint(optimizer=self.optimizer, model=self.trainModel)
+				self.sess.run(tf.compat.v1.global_variables_initializer())
 
 	def train_step(self, batch_h, batch_t, batch_r, batch_y):
 		feed_dict = {
@@ -360,7 +360,7 @@ class Config(object):
 					self.restore_tensorflow()
 				if self.test_link_prediction:
 					total = self.lib.getTestTotal()
-					for times in range(total):
+					for times in range(20):
 						self.lib.getHeadBatch(self.test_h_addr, self.test_t_addr, self.test_r_addr)
 						res = self.test_step(self.test_h, self.test_t, self.test_r)
 						self.lib.testHead(res.__array_interface__['data'][0])
